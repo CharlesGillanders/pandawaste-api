@@ -4,7 +4,7 @@ with open("README.md", "r") as f:
     long_description = f.read()
 
 setup(
-    name="alphaess",
+    name="pandawaste",
     version="0.0.1",
     author="Charles Gillanders",
     author_email="charles@charlesgillanders.com",
