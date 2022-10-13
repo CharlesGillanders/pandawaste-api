@@ -29,11 +29,8 @@ async def main():
         await client.scrapelogin()
         lifts = await client.scrapelifts()
         logger.info(lifts)
-    #except aiohttp.ClientResponseError as e:
-    #    if e.status == 401:
-    #        logger.error("Authentication Error")
-    #    else:
-    #        logger.error(e)
+        collections = await client.scrapecollections()
+        logger.info(collections)
     except Exception as e:
         logger.error(e)
 

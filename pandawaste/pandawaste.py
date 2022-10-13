@@ -1,5 +1,3 @@
-
-from ast import Return
 import requests
 #import time
 #import csv
@@ -64,6 +62,27 @@ class pandawaste:
                 liftentry = {'date':liftdate,'type':lifttype,'weight':liftweight}
                 lifts.append(liftentry)
             return lifts
+        except Exception as e:
+            logger.debug(e)
+            return e
+
+    #Home/NextCollections
+
+    async def scrapecollections(self):
+        """Scrape bin collections"""
+
+        try:
+            formatted_url = BASEURL + "Home/NextCollections"
+            html_text = self._session.get(formatted_url).text
+            soup = BeautifulSoup(html_text,"html.parser")
+            collectionstable = soup.find("table").find("tbody").find_all("tr")
+            collections = []
+            for collection in collectionstable:
+                collectiondate = datetime.strptime(collection.find_all("td")[0].text, '%d/%m/%Y')
+                collectiontype = collection.find_all("td")[2].find("span",attrs={'style':None}).text
+                collectionentry = {'date':collectiondate,'type':collectiontype}
+                collections.append(collectionentry)
+            return collections
         except Exception as e:
             logger.debug(e)
             return e
