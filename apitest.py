@@ -25,10 +25,12 @@ async def main():
 
     logger.debug("Scraping...")
     try:
-        logger.debug("Lifts.")
+        logger.debug("Login")
         await client.scrapelogin()
+        logger.debug("Lifts")
         lifts = await client.scrapelifts()
         logger.info(lifts)
+        logger.debug("Collections")
         collections = await client.scrapecollections()
         logger.info(collections)
     except Exception as e:

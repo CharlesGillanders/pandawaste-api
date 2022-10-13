@@ -43,7 +43,6 @@ class pandawaste:
             Response.raise_for_status()
             return True
         except Exception as e:
-            logger.debug(e)
             return e
     
     async def scrapelifts(self):
@@ -51,7 +50,9 @@ class pandawaste:
 
         try:
             formatted_url = BASEURL + "Lifts"
-            html_text = self._session.get(formatted_url).text
+            response = self._session.get(formatted_url)
+            response.raise_for_status()
+            html_text = response.text
             soup = BeautifulSoup(html_text,"html.parser")
             liftstable = soup.find("table",attrs={'recent-lifts-data-table'}).find("tbody").find_all("tr")
             lifts = []
@@ -63,7 +64,6 @@ class pandawaste:
                 lifts.append(liftentry)
             return lifts
         except Exception as e:
-            logger.debug(e)
             return e
 
     #Home/NextCollections
@@ -73,7 +73,9 @@ class pandawaste:
 
         try:
             formatted_url = BASEURL + "Home/NextCollections"
-            html_text = self._session.get(formatted_url).text
+            response = self._session.get(formatted_url)
+            response.raise_for_status()
+            html_text = response.text
             soup = BeautifulSoup(html_text,"html.parser")
             collectionstable = soup.find("table").find("tbody").find_all("tr")
             collections = []
@@ -84,5 +86,4 @@ class pandawaste:
                 collections.append(collectionentry)
             return collections
         except Exception as e:
-            logger.debug(e)
             return e
